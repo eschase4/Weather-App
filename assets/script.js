@@ -1,8 +1,8 @@
-var apiLink1 = "http://api.openweathermap.org/data/2.5/forecast?lat=" 
+var apiLink1 = "https://api.openweathermap.org/data/2.5/forecast?lat=" 
 var apiLink2 = "&lon="
 var apiLink3 = "&appid=b12eb8eec107d15e513665d79db6437b"
-var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=b12eb8eec107d15e513665d79db6437b"
-var urlP1 = "http://api.openweathermap.org/geo/1.0/direct?q="
+var geoCode = "https://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=b12eb8eec107d15e513665d79db6437b"
+var urlP1 = "https://api.openweathermap.org/geo/1.0/direct?q="
 var urlP2 = "&limit=5&appid=b12eb8eec107d15e513665d79db6437b"
 var options =  {
     method: 'GET', 
