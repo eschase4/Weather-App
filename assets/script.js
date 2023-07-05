@@ -32,7 +32,7 @@ submit.addEventListener("click", function(event){
     event.preventDefault();
     console.log(findCity(event));
     function getApi() {
-        fetch(findCity(event), options)
+        fetch(findCity(), options)
         .then(function (response) {
           return response.json();
         })
@@ -49,29 +49,31 @@ submit.addEventListener("click", function(event){
             })
             .then(function (data) {
                 console.log(data);
-               
+                var forecastData = []
+                for (i = 0; i < 5; i++) {
                 dataSet = {
                 cityName: data.city.name,
-                currentTemp: "Feels Like: " + (data.list[0].main.feels_like * 1.8 -459.67).toFixed(1) + " °F",
-                lowTemp: "Lows of " + (data.list[0].main.temp_min * 1.8 -459.67).toFixed(1) + " °F",
-                highTemp: "Highs of " + (data.list[0].main.temp_max * 1.8 -459.67).toFixed(1) + " °F"
+                currentTemp: "Feels Like: " + (data.list[i].main.feels_like * 1.8 -459.67).toFixed(1) + " °F",
+                lowTemp: "Lows of " + (data.list[i].main.temp_min * 1.8 -459.67).toFixed(1) + " °F",
+                highTemp: "Highs of " + (data.list[i].main.temp_max * 1.8 -459.67).toFixed(1) + " °F"
                 }
-
+                forecastData.push(dataSet)
+              }
                 localStorage.setItem('myObject', JSON.stringify(dataSet));
   
-                console.log(dataSet)
-                const list = document.createElement('div');
-
-                  for (const key in dataSet) {
-                    if (dataSet.hasOwnProperty(key)) {
-                    const value = dataSet[key];
+                console.log(forecastData)
+                for (i = 0; i < 5; i++) {
+                  const list = document.createElement('div');
+                  for (const key in forecastData[i]) {
+                    if (forecastData[i].hasOwnProperty(key)) {
+                    const value = forecastData[i][key];
                     const item = document.createElement('p');
                     item.textContent = `${value}`;
                      list.appendChild(item);
-                        }
-                      }
-
-                      listContainer.appendChild(list);
+                    }
+                  }
+                  listContainer.appendChild(list);
+                  }
               
              });
         
@@ -81,9 +83,6 @@ submit.addEventListener("click", function(event){
       
       }
       
-      getApi(findCity())
+      getApi()
       
   });
-  submit.addEventListener("click", function(){
-    getApi()
-  })
