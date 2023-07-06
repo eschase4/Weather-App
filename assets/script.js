@@ -28,9 +28,18 @@ function findCity() {
     return this.urlP1 + city + urlP2
 }
 
+function handleDate(unix, i){
+  if (i === 0) {
+    var date = new Date((unix*1000 + 8.64e+7)).toLocaleDateString()
+    return date
+  }
+  var date = new Date((unix*1000) + i*8.64e+7).toLocaleDateString()
+  return date 
+}
+
 submit.addEventListener("click", function(event){ 
     event.preventDefault();
-    console.log(findCity(event));
+    console.log(findCity(event)); //setting to erie, should be 'event'
     function getApi() {
         fetch(findCity(), options)
         .then(function (response) {
@@ -55,24 +64,31 @@ submit.addEventListener("click", function(event){
                 cityName: data.city.name,
                 currentTemp: "Feels Like: " + (data.list[i].main.feels_like * 1.8 -459.67).toFixed(1) + " °F",
                 lowTemp: "Lows of " + (data.list[i].main.temp_min * 1.8 -459.67).toFixed(1) + " °F",
-                highTemp: "Highs of " + (data.list[i].main.temp_max * 1.8 -459.67).toFixed(1) + " °F"
+                highTemp: "Highs of " + (data.list[i].main.temp_max * 1.8 -459.67).toFixed(1) + " °F",
+                date: handleDate(data.list[i].dt, i)
                 }
                 forecastData.push(dataSet)
+                console.log(forecastData)
               }
                 localStorage.setItem('myObject', JSON.stringify(dataSet));
-  
-                console.log(forecastData)
+
+                // const myRow = document.createElement('div');
+                // myRow.className = ""
+
                 for (i = 0; i < 5; i++) {
                   const list = document.createElement('div');
+                  list.className = "border border-dark rounded  ms-3 text-center d-flex-block flex-column justify-content-center align-items-center "
                   for (const key in forecastData[i]) {
                     if (forecastData[i].hasOwnProperty(key)) {
                     const value = forecastData[i][key];
                     const item = document.createElement('p');
                     item.textContent = `${value}`;
                      list.appendChild(item);
+                    //  myRow.appendChild(list)
                     }
                   }
                   listContainer.appendChild(list);
+                  // console.log(listContainer)
                   }
               
              });
